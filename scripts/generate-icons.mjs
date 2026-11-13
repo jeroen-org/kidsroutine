@@ -1,0 +1,59 @@
+import { mkdir, writeFile } from 'node:fs/promises'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import sharp from 'sharp'
+
+const scriptDir = path.dirname(fileURLToPath(import.meta.url))
+const outDir = path.resolve(scriptDir, '..', 'public')
+
+function iconSvg({ rounded }) {
+  const rect = rounded
+    ? '<rect width="512" height="512" rx="112" fill="url(#bg)"/>'
+    : '<rect width="512" height="512" fill="url(#bg)"/>'
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7C6CF6"/>
+      <stop offset="0.55" stop-color="#6366F1"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <linearGradient id="star" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#FFF6C9"/>
+      <stop offset="0.55" stop-color="#FFD75E"/>
+      <stop offset="1" stop-color="#FFB020"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#312E81" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  ${rect}
+  <circle cx="96" cy="96" r="86" fill="#FFFFFF" opacity="0.08"/>
+  <circle cx="430" cy="430" r="120" fill="#FFFFFF" opacity="0.07"/>
+  <circle cx="420" cy="90" r="54" fill="#FFFFFF" opacity="0.06"/>
+  <g filter="url(#shadow)">
+    <path d="M256 116 L291.3 207.5 L389.2 212.7 L313.1 274.5 L338.3 369.3 L256 316 L173.7 369.3 L198.9 274.5 L122.8 212.7 L220.7 207.5 Z" fill="url(#star)" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="6" stroke-linejoin="round"/>
+  </g>
+  <path d="M92 78 l9 24 24 9 -24 9 -9 24 -9 -24 -24 -9 24 -9 z" fill="#FFFFFF" opacity="0.9"/>
+  <path d="M420 358 l7 19 19 7 -19 7 -7 19 -7 -19 -19 -7 19 -7 z" fill="#FFFFFF" opacity="0.75"/>
+  <circle cx="402" cy="130" r="8" fill="#FFFFFF" opacity="0.6"/>
+</svg>`
+}
+
+const roundedSvg = iconSvg({ rounded: true })
+const fullBleedSvg = iconSvg({ rounded: false })
+
+await mkdir(outDir, { recursive: true })
+
+await writeFile(path.join(outDir, 'favicon.svg'), roundedSvg)
+
+const render = (svg, size, file) =>
+  sharp(Buffer.from(svg)).resize(size, size).png().toFile(path.join(outDir, file))
+
+await render(roundedSvg, 192, 'pwa-192x192.png')
+await render(roundedSvg, 512, 'pwa-512x512.png')
+await render(fullBleedSvg, 512, 'maskable-512x512.png')
+await render(fullBleedSvg, 180, 'apple-touch-icon.png')
+await render(roundedSvg, 32, 'favicon-32x32.png')
+
+console.log('Iconen gegenereerd in public/.')
