@@ -4,10 +4,10 @@
   "version": "0.1.0",
   "type": "module",
   "description": "Een kindvriendelijke routine-PWA voor ochtend- en avondtaken.",
-  "homepage": "https://jeroenvdw-bot.github.io/kidsroutine/",
+  "homepage": "https://jeroen-org.github.io/kidsroutine/",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jeroenvdw-bot/kidsroutine.git"
+    "url": "git+https://github.com/jeroen-org/kidsroutine.git"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"

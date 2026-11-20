@@ -35,9 +35,9 @@ npm run preview
 
 ## Implementatie op GitHub Pages
 
-Deze repository staat op [github.com/jeroenvdw-bot/kidsroutine](https://github.com/jeroenvdw-bot/kidsroutine) en gebruikt GitHub Actions voor GitHub Pages.
+Deze repository staat op [github.com/jeroen-org/kidsroutine](https://github.com/jeroen-org/kidsroutine) en gebruikt GitHub Actions voor GitHub Pages.
 
-De workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) bouwt de app en publiceert de inhoud van `dist/` naar [https://jeroenvdw-bot.github.io/kidsroutine/](https://jeroenvdw-bot.github.io/kidsroutine/).
+De workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) bouwt de app en publiceert de inhoud van `dist/` naar [https://jeroen-org.github.io/kidsroutine/](https://jeroen-org.github.io/kidsroutine/).
 
 1. Ga naar **Settings → Pages**.
 2. Kies bij **Source** voor **GitHub Actions**.
